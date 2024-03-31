@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Style for navigation bar */
+        .navbar {
+            background-color: #007bff; /* Blue color */
+            overflow: hidden;
+            width: 100%; /* Full width */
+            position: fixed; /* Fixed position */
+            top: 0; /* Fixed to top */
+            z-index: 1000; /* Ensure it's above other elements */
+        }
+
+        /* Style for navigation bar links */
+        .navbar a {
+            float: right; /* Align links to the right */
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+
+        /* Change color of navigation bar links on hover */
+        .navbar a:hover {
+            background-color: #0056b3; /* Darker blue color */
+        }
+
+        /* Style for the active/current navigation link */
+        .active {
+            background-color: #0056b3; /* Darker blue color */
+        }
+
+        /* Clear floats after the navbar */
+        .navbar::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        /* Adjust main content to accommodate fixed navbar */
+        body {
+            padding-top: 50px; /* Equal to navbar height */
+            margin-bottom: 100px; /* Make space for the footer */
+        }
+        
+        /* Style for the logo */
+        .logo img {
+            height: 500px; /* Adjust height as needed */
+            margin: 5px 20px; /* Add some margin for spacing */
+        }
+
+        /* Style for the footer */
+        .footer-container {
+            background-color: #007bff; /* Blue color */
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer {
+    color: white; /* Set text color to white */
+    text-align: center;
+    padding: 20px 0;
+    margin: 0;
+}
+
+.footer-text {
+    color: white; /* Set text color to white */
+    font-weight: bold; /* Make text bold */
+}
+
+
+
+
+    </style>
+</head>
+<body>
+    <div class="navbar with-logo">
+        <a href="https://www.pristiniaiuniversity.tn/fr">Pristini AI School</a>
+    
+        <a class="video-maker" href="/" style="float: left;">Image SlideShow Maker</a> 
+        <a class="active" href="/">Home</a>
+    </div>
+
+    <header>
+        <img src="..\static\jjjjjj.png" alt="Your Image" style="width: 100%; max-width: 200px;">
+        <h1>Images to Video Generator</h1>
+        
+
+    </header>
+   
+    <main>
+        <section id="step1" class="step">
+            <h2>Step 1: Upload Images</h2>
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" multiple>
+                <input type="submit" value="Upload">
+            </form>
+
+            <div id="image-gallery">
+                <h2>Uploaded Images</h2>
+                <ul>
+                    {% for image in images %}
+                        <li>
+                            <img src="{{ url_for('uploaded_file', filename=image) }}" alt="{{ image }}">
+                            <a href="/delete/{{ image }}">Delete</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+
+        
+
+        <section id="step3" class="step">
+            <h2>Step 2: Upload Audio Files</h2>
+            <form method="POST" enctype="multipart/form-data" action="/generate">
+                <div class="input-container">
+                    <label for="speech">Upload Speech MP3:</label>
+                    <input type="file" name="speech" id="speech" accept=".mp3" required>
+                </div>                
+                <div class="input-container">
+                    <label for="background">Upload Background MP3: (optional)</label>
+                    <input type="file" name="background" id="background" accept=".mp3" required>
+                </div>
+                <div class="input-container">
+                    <input type="submit" value="Generate Slideshow">
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div class="footer-container">
+        <footer class="footer">
+            <p class="footer-text">
+                © Created by AI Assassins Group
+            </p>
+
+        </footer>
+    </div>
+</body>
+</html>
